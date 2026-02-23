@@ -5,6 +5,7 @@ import {FaCaretUp} from 'react-icons/fa';
 import Slider from 'react-slick';
 import { useCart } from "../Cart and Checkout/CartContext.jsx";
 import StarRating from "./StarRating.jsx";
+import SkeletonLoader from "../SkeletonLoader/SkeletonLoader.jsx";
 const ProductDetails = ( ) => {
     const {addToCart} = useCart();
     const { id } = useParams();
@@ -15,6 +16,7 @@ const ProductDetails = ( ) => {
     console.log("rated product: ",AllProducts.filter((product)=> product.id === productId));
     console.log(AllProducts);
     
+    const [imageLoaded, setImageLoaded] = useState({});
     const [showReviews,setShowReviews] = useState(false);
     const handleShowReviews = ()=>{
         setShowReviews(prevState => !prevState);
@@ -22,6 +24,10 @@ const ProductDetails = ( ) => {
     const [reviewText,setReviewText] = useState("");
     const [reviews,setReviews] = useState(ratedProduct?.reviews || []);
     const [ReviewDone,setReviewDone] = useState(false);
+
+    const handleImageLoad = (id) => {
+      setImageLoaded(prev => ({ ...prev, [id]: true }));
+    };
 
     const handleReviewSubmit=(e)=>{
         e.preventDefault();
@@ -104,12 +110,16 @@ const ProductDetails = ( ) => {
     
             <div className="sm:container flex flex-col sm:flex-row items-center w-full justify-center gap-2 pt-10 ]">
                 <div className="flex items-center justify-center w-full sm:w-[50%]">
+                {!imageLoaded[ratedProduct.id] && <SkeletonLoader variant="product-details" />}
                 <img className="w-[20rem] h-fit p-2 shadow-2xl"
                     data-aos="zoom-out"
                     data-aos-delay="50000"
                     data-aos-duration='500'
                     data-aos-once="true"
-                    src={ratedProduct.img}>
+                    src={ratedProduct.img}
+                    onLoad={() => handleImageLoad(ratedProduct.id)}
+                    style={{ display: imageLoaded[ratedProduct.id] ? 'block' : 'none' }}
+                >
                 </img>
                 </div>
 
@@ -225,7 +235,8 @@ const ProductDetails = ( ) => {
                             >
                                 
                                 <div>
-                                    <img src={data.img} alt={data.name} className="w-40 h-40" />
+                                    {!imageLoaded[data.id] && <SkeletonLoader variant="product-card" />}
+                                    <img src={data.img} alt={data.name} className="w-40 h-40" onLoad={() => handleImageLoad(data.id)} style={{ display: imageLoaded[data.id] ? 'block' : 'none' }} />
                                 </div>
                                 
                                 <div >

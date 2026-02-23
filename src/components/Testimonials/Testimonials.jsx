@@ -11,19 +11,19 @@ import Slider from 'react-slick';
     },
     {
       id: 2,
-      name: "Satya Nadella",
+      name: "Umar Khan",
       text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque reiciendis inventore iste ratione ex alias quis magni at optio",
       img: "https://picsum.photos/102/102",
     },
     {
       id: 3,
-      name: "Virat Kohli",
+      name: "Amir Khan",
       text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque reiciendis inventore iste ratione ex alias quis magni at optio",
       img: "https://picsum.photos/104/104",
     },
     {
       id: 5,
-      name: "Sachin Tendulkar",
+      name: "Ahmed Suhail",
       text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque reiciendis inventore iste ratione ex alias quis magni at optio",
       img: "https://picsum.photos/103/103",
     },
