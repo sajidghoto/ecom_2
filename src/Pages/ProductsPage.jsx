@@ -4,14 +4,20 @@ import ProductCatalog from "../data/productCatalog";
 import { useNavigate } from "react-router-dom";
 import { useMemo } from "react";
 import { useCart } from "../components/Cart and Checkout/CartContext";
+import SkeletonLoader from "../components/SkeletonLoader/SkeletonLoader.jsx";
 const ProductsPage = ()=>{
     const {addToCart} = useCart();
     // Combine all product categories into a single array
     const allProducts = Object.values(ProductCatalog).flat();
 
     const [orderId,setOrderId] = useState(null);
+    const [imageLoaded, setImageLoaded] = useState({});
     const navigate = useNavigate();
    const {showProductDetails} = useCart();
+
+    const handleImageLoad = (id) => {
+      setImageLoaded(prev => ({ ...prev, [id]: true }));
+    };
 
     const [filterType,setFilterType] = useState("");
     const [showDropDown,setShowDropDown] = useState(false);
@@ -118,8 +124,11 @@ const ProductsPage = ()=>{
                     {filteredProducts.map((item,index) => (
                         //Added index as a key instead of item id for correct render order , so that filter works properly
                         <div key={index} onClick={()=>showProductDetails(item.id)} className="cursor-pointer flex flex-col items-center justify-center border-2 md:w-max w-80 shadow-lg rounded-lg p-2 gap-2">
+                            {!imageLoaded[item.id] && <SkeletonLoader variant="product-card" />}
                             <img src={item.img}
                                 className="w-[15rem] h-[12rem] "
+                                onLoad={() => handleImageLoad(item.id)}
+                                style={{ display: imageLoaded[item.id] ? 'block' : 'none' }}
                             ></img>
                             <div>
                                 <h1>Name:{item.title}</h1>

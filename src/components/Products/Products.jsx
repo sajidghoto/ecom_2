@@ -1,10 +1,17 @@
 import { FaStar } from "react-icons/fa";
+import { useState } from "react";
 
 import ProductsData from "../../data/Products.js";
 import { useParams } from "react-router-dom";
 import { useCart } from "../Cart and Checkout/CartContext.jsx";
+import SkeletonLoader from "../SkeletonLoader/SkeletonLoader.jsx";
   
 const Products = ({orderId,setOrderId,navigate}) => {
+  const [imageLoaded, setImageLoaded] = useState({});
+
+  const handleImageLoad = (id) => {
+    setImageLoaded(prev => ({ ...prev, [id]: true }));
+  };
   
   const id = useParams();
   const {addToCart,showProductDetails} = useCart();
@@ -27,9 +34,12 @@ const Products = ({orderId,setOrderId,navigate}) => {
                             data-aos-delay={data.aosDelay}
                             onClick={()=>showProductDetails(data.id)}
                         >
+                            {!imageLoaded[data.id] && <SkeletonLoader variant="product-card" />}
                             <img className="h-[220px] w-[150] object-cover rounded-md"
                             src={data.img}
-                            alt={data.title}    
+                            alt={data.title}
+                            onLoad={() => handleImageLoad(data.id)}
+                            style={{ display: imageLoaded[data.id] ? 'block' : 'none' }}
                             />
                             <div className="flex items-center justify-left gap-5 px-3">
                               <div className="flex flex-col items-center justify-center sm:text-center md:text-left md:items-start">
