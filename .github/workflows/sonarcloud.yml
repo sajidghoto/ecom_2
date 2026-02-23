@@ -52,6 +52,6 @@ jobs:
         with:
           projectBaseDir: .
           args: >
-            -Dsonar.projectKey=YOUR_PROJECT_KEY
-            -Dsonar.organization=YOUR_ORG_KEY
+            -Dsonar.projectKey=sajidghoto_ecom_2
+            -Dsonar.organization=sajidghoto
             -Dsonar.qualitygate.wait=true
