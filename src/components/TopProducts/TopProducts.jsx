@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaStar } from "react-icons/fa";
 
 import ProductsData from "../../data/TopProducts.js";
 import { useCart } from "../Cart and Checkout/CartContext.jsx";
 import { useAuth } from "../Auth/AuthContext.jsx";
+import SkeletonLoader from "../SkeletonLoader/SkeletonLoader.jsx";
 
 const TopProducts = ({orderId,setOrderId,navigate})=>{
+    const [imageLoaded, setImageLoaded] = useState({});
+
+    const handleImageLoad = (id) => {
+      setImageLoaded(prev => ({ ...prev, [id]: true }));
+    };
     
     const {addToCart,showProductDetails} = useCart();
     
@@ -36,10 +42,13 @@ const TopProducts = ({orderId,setOrderId,navigate})=>{
                             onClick={()=>showProductDetails(data.id)}
                         >
                             <div>
+                            {!imageLoaded[data.id] && <SkeletonLoader variant="top-product-card" />}
                             <img className="max-w-[140px] block max-auto transform -translate-y-20 
                             group-hover:scale-105 duration-300 drop-shadow-md"
                             src={data.img}
-                            alt={data.title}    
+                            alt={data.title}
+                            onLoad={() => handleImageLoad(data.id)}
+                            style={{ display: imageLoaded[data.id] ? 'block' : 'none' }}
                             />
                             </div>
                             <div className="md:mt-[-5rem] mt-[-6rem]" >
