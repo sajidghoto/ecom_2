@@ -92,7 +92,7 @@ const Footer = () => {
                 </div>
                 <div className='flex items-center justify-center gap-2 mt-4'>
                     <FaLocationArrow className='w-8 h-8'/>
-                    <p>Noida, Uttar Pradesh</p>
+                    <p>Sindh, Pakistan</p>
                 </div>
                 <div className='flex items-center justify-center gap-2 mt-4'>
                     <FaMobileAlt className='w-8 h-8'/>
